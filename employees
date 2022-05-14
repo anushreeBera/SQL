@@ -1,0 +1,28 @@
+Q. SQL Query to find the second highest salary of Employee
+
+S :-
+create table department(  
+  id        INT(10),  
+  name      varchar(14),  
+  location  varchar(13),  
+  constraint pk_id primary key (id)  
+);
+
+create table employee (
+  id INT(10),
+  name VARCHAR(255),
+  salary INT(10),
+  department_id INT(10),
+  constraint pk_id primary key (id),
+  CONSTRAINT fk_deptno FOREIGN KEY (department_id)
+    REFERENCES department(id) 
+);
+  
+  INSERT INTO employee (id, name, salary)
+  VALUES (1, 'anu', 10), (2, 'babai', 20), (3, 'catie', 40);
+
+Q :-
+select * from employee order by salary DESC LIMIT 1,1
+
+--
+
