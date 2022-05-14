@@ -1,6 +1,7 @@
-Q. SQL Query to find the second highest salary of Employee
+-- Employee | Department --
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
-S :-
+-- Schema --
 create table department(  
   id        INT(10),  
   name      varchar(14),  
@@ -18,11 +19,29 @@ create table employee (
     REFERENCES department(id) 
 );
   
-  INSERT INTO employee (id, name, salary)
-  VALUES (1, 'anu', 10), (2, 'babai', 20), (3, 'catie', 40);
+  INSERT INTo department(id, name, location)
+VALUES (1, 'plumber', 'JSR'),
+(2, 'Carpenter', 'HYD'),
+(3, 'Mason', 'NYC');
 
-Q :-
-select * from employee order by salary DESC LIMIT 1,1
+  INSERT INTO employee (id, name, salary, department_id)
+  VALUES (1, 'anu', 10, 1), (2, 'babai', 20, 2), (3, 'catie', 40, 3), (4, 'dochie', 25, 1), (5, 'elen', 47, 2);
 
---
 
+--Q1 - SQL Query to find the second highest salary of Employee
+select * from employee order by salary DESC LIMIT 1,1;
+
+--Q2 - a- SQL Query to find Max Salary from each department.
+select department_id, max(salary)
+from employee 
+group by department_id;
+
+b- SQL Query to find Max Salary from each department with department name.
+select department.name, max(salary)
+from employee right outer join department on department.id=employee.department_id
+group by department_id;
+
+-- Q3 - a- Write SQL Query to find duplicate rows in a database? and then write SQL query to delete them?
+SELECT * FROM employee a WHERE id != (SELECT MAX(id) FROM employee b WHERE a.name=b.name);
+
+DELETE FROM employee a WHERE id != (SELECT MAX(id) FROM employee b WHERE a.name=b.name);
