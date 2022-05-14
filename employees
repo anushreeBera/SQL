@@ -45,3 +45,11 @@ group by department_id;
 SELECT * FROM employee a WHERE id != (SELECT MAX(id) FROM employee b WHERE a.name=b.name);
 
 DELETE FROM employee a WHERE id != (SELECT MAX(id) FROM employee b WHERE a.name=b.name);
+
+-- Q4 - Display above average salary employees
+SELECT *
+FROM employee
+WHERE salary >= ( SELECT AVG(salary) FROM employee);
+
+-- Q5 - Find all employees who are also managers
+SELECT DISTINCT(m.name) FROM employee e, employee m WHERE e.manager_id = m.id;
