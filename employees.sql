@@ -36,7 +36,7 @@ select department_id, max(salary)
 from employee 
 group by department_id;
 
-b- SQL Query to find Max Salary from each department with department name.
+-- b- SQL Query to find Max Salary from each department with department name.
 select department.name, max(salary)
 from employee right outer join department on department.id=employee.department_id
 group by department_id;
