@@ -46,4 +46,7 @@ FROM Customers
 LEFT JOIN Orders ON Customers.id = Orders.customerId
 WHERE Orders.id IS NULL;
 
--- Q8 - 
+-- Q8 - https://leetcode.com/problems/delete-duplicate-emails/
+DELETE p1
+FROM Person p1 JOIN Person p2
+ON p1.email = p2.email WHERE p1.id > p2.id;
