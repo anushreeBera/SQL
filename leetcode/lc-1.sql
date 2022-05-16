@@ -29,4 +29,21 @@ WHERE id != (
     SELECT MAX(id) from Person b WHERE a.email = b.email
 );
 
--- Q5 - 
+-- Q5 - https://leetcode.com/problems/combine-two-tables/submissions/
+SELECT firstName, lastName, city, state
+FROM Person
+LEFT JOIN Address on Person.personId = Address.personId;
+
+-- Q6 - https://leetcode.com/problems/employees-earning-more-than-their-managers
+SELECT e.name as Employee
+FROM Employee e
+JOIN Employee m ON e.managerId = m.id
+WHERE e.salary > m.salary;
+
+-- Q7 - https://leetcode.com/problems/customers-who-never-order/
+SELECT name AS Customers
+FROM Customers
+LEFT JOIN Orders ON Customers.id = Orders.customerId
+WHERE Orders.id IS NULL;
+
+-- Q8 - 
