@@ -22,4 +22,11 @@ WHERE id % 2 != 0
 AND description NOT LIKE '%boring%'
 ORDER BY rating DESC;
 
--- Q4 - 
+-- Q4 - https://leetcode.com/problems/duplicate-emails/
+SELECT DISTINCT email
+FROM Person a
+WHERE id != (
+    SELECT MAX(id) from Person b WHERE a.email = b.email
+);
+
+-- Q5 - 
