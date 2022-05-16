@@ -50,3 +50,23 @@ WHERE Orders.id IS NULL;
 DELETE p1
 FROM Person p1 JOIN Person p2
 ON p1.email = p2.email WHERE p1.id > p2.id;
+
+-- Q9 - https://leetcode.com/problems/rising-temperature
+SELECT w1.id as id
+FROM Weather w1
+JOIN Weather w2 ON DATEDIFF(w1.recordDate, w2.recordDate) = 1
+AND w1.temperature > w2.temperature;
+
+-- Q10 - https://leetcode.com/problems/classes-more-than-5-students/
+SELECT class
+FROM Courses
+GROUP BY class
+HAVING COUNT(DISTINCT student) >= 5;
+
+-- Q11 - https://leetcode.com/problems/second-highest-salary/
+SELECT
+(SELECT DISTINCT salary
+FROM Employee
+ORDER BY salary DESC
+LIMIT 1,1)
+ AS SecondHighestSalary;
