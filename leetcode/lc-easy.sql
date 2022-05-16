@@ -70,3 +70,11 @@ FROM Employee
 ORDER BY salary DESC
 LIMIT 1,1)
  AS SecondHighestSalary;
+ 
+ -- Q12 - https://leetcode.com/problems/game-play-analysis-i/
+ SELECT player_id, MIN(event_date) as first_login
+FROM Activity
+GROUP BY player_id;
+
+-- Q13 - https://leetcode.com/problems/sales-person/
+
