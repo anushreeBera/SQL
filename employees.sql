@@ -44,7 +44,14 @@ group by department_id;
 -- Q3 - a- Write SQL Query to find duplicate rows in a database? and then write SQL query to delete them?
 SELECT * FROM employee a WHERE id != (SELECT MAX(id) FROM employee b WHERE a.name=b.name);
 
-DELETE FROM employee a WHERE id != (SELECT MAX(id) FROM employee b WHERE a.name=b.name);
+DELETE
+FROM employee
+WHERE id NOT IN (
+  SELECT * FROM (
+  SELECT MIN(id) FROM employee GROUP BY name
+    ) as P1
+);
+-- <Note> https://stackoverflow.com/questions/45494/mysql-error-1093-cant-specify-target-table-for-update-in-from-clause
 
 -- Q4 - Display above average salary employees
 SELECT *
