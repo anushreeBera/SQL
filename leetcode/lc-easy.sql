@@ -77,4 +77,32 @@ FROM Activity
 GROUP BY player_id;
 
 -- Q13 - https://leetcode.com/problems/sales-person/
+SELECT sp.name
+FROM SalesPerson sp
+WHERE sp.name NOT IN (
+    SELECT sp.name
+    FROM Orders o
+    RIGHT OUTER JOIN SalesPerson sp ON o.sales_id = sp.sales_id
+    WHERE o.com_id = (
+        SELECT com_id from Company where name='RED'
+    )
+);
+
+-- Q14 - https://leetcode.com/problems/actors-and-directors-who-cooperated-at-least-three-times/
+SELECT actor_id, director_id
+FROM ActorDirector
+GROUP BY actor_id, director_id
+HAVING count(*) >= 3;
+
+-- Q15 - https://leetcode.com/problems/sales-analysis-iii/
+SELECT p.product_id, p.product_name
+FROM Product p
+WHERE (product_id, product_name) NOT IN (
+    SELECT p.product_id, p.product_name
+    FROM Sales s
+    JOIN Product p ON p.product_id = s.product_id
+    WHERE s.sale_date < '2019-01-01' OR s.sale_date >  '2019-03-31'
+);
+
+-- Q15 - https://leetcode.com/problems/user-activity-for-the-past-30-days-i/
 
