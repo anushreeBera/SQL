@@ -177,3 +177,4 @@ Select employee_id
 FROM Salaries
 WHERE employee_id NOT IN (SELECT DISTINCT employee_id FROM Employees)
 ORDER By employee_id;
+ -- NOTE : https://stackoverflow.com/questions/2384298/why-does-mysql-report-a-syntax-error-on-full-outer-join
