@@ -105,4 +105,75 @@ WHERE (product_id, product_name) NOT IN (
 );
 
 -- Q15 - https://leetcode.com/problems/user-activity-for-the-past-30-days-i/
+SELECT activity_date as day, count(DISTINCT user_id) as active_users
+FROM Activity
+WHERE DATEDIFF('2019-07-27', activity_date) < 30 AND SIGN(DATEDIFF('2019-07-27', activity_date)) = 1
+GROUP BY activity_date
+;
 
+-- Q16 - https://leetcode.com/problems/article-views-i/
+SELECT DISTINCT author_id as id
+FROM Views
+WHERE author_id = viewer_id
+GROUP BY article_id, author_id, viewer_id
+ORDER BY author_id;
+
+-- Q17 - https://leetcode.com/problems/top-travellers/
+SELECT u.name, IFNULL(SUM(r.distance), 0) as travelled_distance
+FROM Rides r
+RIGHT JOIN Users u ON u.id = r.user_id
+GROUP BY u.name
+ORDER BY travelled_distance DESC, u.name ASC;
+
+-- Q18 - https://leetcode.com/problems/group-sold-products-by-the-date/
+SELECT sell_date, COUNT(DISTINCT product) AS  num_sold, GROUP_CONCAT(DISTINCT product ORDER BY product ASC) as products
+FROM Activities
+GROUP BY sell_date
+
+-- NOTE: https://stackoverflow.com/questions/995373/mysql-sort-group-concat-values
+
+-- Q19 - https://leetcode.com/problems/patients-with-a-condition/
+SELECT  patient_id, patient_name, conditions
+FROM Patients
+WHERE conditions LIKE 'DIAB1%'
+    OR conditions LIKE '% DIAB1%'
+;
+
+-- Q20 - https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/
+SELECT customer_id, COUNT(*) as count_no_trans
+FROM Visits
+WHERE visit_id NOT IN (SELECT DISTINCT visit_id FROM Transactions)
+GROUP BY customer_id;
+
+-- Q21 - https://leetcode.com/problems/bank-account-summary-ii/
+SELECT u.name, SUM(t.amount) as balance
+FROM Transactions t
+JOIN Users u ON u.account = t.account
+GROUP BY u.name
+HAVING balance > 10000;
+
+-- Q22 - https://leetcode.com/problems/fix-names-in-a-table/
+SELECT user_id, CONCAT(UPPER(LEFT(name,1)),LOWER(SUBSTRING(name,2,LENGTH(name)))) as name
+FROM Users
+ORDER BY user_id;
+
+-- Q23 - https://leetcode.com/problems/daily-leads-and-partners/
+SELECT date_id, make_name, COUNT(DISTINCT lead_id) as unique_leads, COUNT(DISTINCT partner_id) as unique_partners
+FROM DailySales
+GROUP BY date_id, make_name;
+
+-- Q24 - https://leetcode.com/problems/find-followers-count/
+SELECT user_id, COUNT(DISTINCT follower_id) as followers_count
+FROM Followers
+GROUP BY user_id
+ORDER BY user_id;
+
+-- Q25 - https://leetcode.com/problems/employees-with-missing-information/
+Select employee_id
+FROM Employees
+WHERE employee_id NOT IN (SELECT DISTINCT employee_id FROM Salaries)
+UNION
+Select employee_id
+FROM Salaries
+WHERE employee_id NOT IN (SELECT DISTINCT employee_id FROM Employees)
+ORDER By employee_id;
