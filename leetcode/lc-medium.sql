@@ -8,3 +8,14 @@ WHERE (DepartmentId , salary) IN (
     GROUP BY DepartmentId
 );
 
+-- Q2 - https://leetcode.com/problems/nth-highest-salary/
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+SET N=N-1;
+  RETURN (
+      SELECT DISTINCT SALARY
+        FROM EMPLOYEE
+        ORDER BY SALARY DESC
+        LIMIT N,1  
+  );
+END
